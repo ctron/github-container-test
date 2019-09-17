@@ -17,7 +17,10 @@ jobs:
 
     - name: Authenticate
       run: echo ${{ secrets.QUAY_PASSWORD }} | docker login quay.io --username ${{secrets.QUAY_USERNAME}} --password-stdin
+
     - name: Tag the container image
+      if: github.ref == 'refs/heads/master'
       run: docker tag github-container-test:${{ github.sha }} quay.io/ctron/github-container-test:latest
     - name: Push the container image
+      if: github.ref == 'refs/heads/master'
       run: docker push quay.io/ctron/github-container-test:latest
