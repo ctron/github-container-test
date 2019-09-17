@@ -10,7 +10,9 @@ jobs:
  
     steps:
     - uses: actions/checkout@v1
-    - name: Build the Container image
-      run: docker build . --file Dockerfile --tag github-container-test:$(date +%s)
-    - name: Push the Container image
+    - name: Build the container image
+      run: docker build . --file Dockerfile --tag github-container-test:${{ github.sha }}
+    - name: Tag the container image
+      run: docker tag github-container-test:${{ github.sha }} docker.pkg.github.com/ctron/github-container-test/github-container-test:latest
+    - name: Push the container image
       run: docker push docker.pkg.github.com/ctron/github-container-test/github-container-test:latest
