@@ -1,3 +1,3 @@
 FROM fedora:30
 
-CMD bash2
+CMD bash -c "echo foo"
