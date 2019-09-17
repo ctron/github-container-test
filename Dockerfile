@@ -1,3 +1,3 @@
 FROM fedora:30
 
-CMD bash
+CMD bash2
