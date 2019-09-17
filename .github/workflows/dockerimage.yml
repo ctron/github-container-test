@@ -16,8 +16,8 @@ jobs:
       run: docker build . --file Dockerfile --tag github-container-test:${{ github.sha }}
 
     - name: Authenticate
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com --username ctron --password-stdin
+      run: echo ${{ secrets.QUAY_PASSWORD }} | docker login quay.io --username ${{secrets.QUAY_USERNAME}} --password-stdin
     - name: Tag the container image
-      run: docker tag github-container-test:${{ github.sha }} docker.pkg.github.com/ctron/github-container-test/github-container-test:latest
+      run: docker tag github-container-test:${{ github.sha }} quay.io/ctron/github-container-test:latest
     - name: Push the container image
-      run: docker push docker.pkg.github.com/ctron/github-container-test/github-container-test:latest
+      run: docker push quay.io/ctron/github-container-test:latest
