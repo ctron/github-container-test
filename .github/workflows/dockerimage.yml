@@ -15,9 +15,15 @@ jobs:
     - name: Build the container image
       run: docker build . --file Dockerfile --tag github-container-test:${{ github.sha }}
 
+  publish:
+
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
     - name: Authenticate
       run: echo ${{ secrets.QUAY_PASSWORD }} | docker login quay.io --username ${{secrets.QUAY_USERNAME}} --password-stdin
-
+      if: github.ref == 'refs/heads/master'
     - name: Tag the container image
       if: github.ref == 'refs/heads/master'
       run: docker tag github-container-test:${{ github.sha }} quay.io/ctron/github-container-test:latest
